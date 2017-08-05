@@ -1,0 +1,44 @@
+##############################################################################
+#                            Logger configuration                            #
+##############################################################################
+
+[loggers]
+keys=root,gpsl
+
+[handlers]
+keys=syslog,console
+
+[formatters]
+keys=syslog,console
+
+[logger_root]
+level=NOTSET
+handlers=console
+
+[logger_gpsl]
+# Desired loglevel: DEBUG, INFO, WARNING, ERROR, CRITICAL
+level=DEBUG
+# Desired handler: syslog, console
+handlers=console
+qualname=gpsl
+propagate=0
+
+[handler_console]
+class = colorlog.StreamHandler
+formatter=console
+args=(sys.stderr,)
+
+[handler_syslog]
+class=logging.handlers.SysLogHandler
+formatter=syslog
+args=('/dev/log',)
+
+[formatter_syslog]
+format=%(name)s: %(module)s - %(message)s
+datefmt=
+class=logging.Formatter
+
+[formatter_console]
+format = %(log_color)s%(asctime)s %(levelname)s: %(name)s - %(message)s
+datefmt =
+class = colorlog.ColoredFormatter
